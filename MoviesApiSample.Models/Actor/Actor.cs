@@ -9,6 +9,7 @@ namespace MoviesApiSample.Models.ActorNamespace
         public string LastName { get; set; }
         public string Gender { get; set; } 
         public int Age { get; set; }
-        public ICollection<Movie> Movies { get; set; }
+        public int ActorMovieId { get; set; }
+        public ActorMovie ActorMovie { get; set; }
     }
 }

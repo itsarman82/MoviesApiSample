@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MoviesApiSample.Models.ActorNamespace;
-using MoviesApiSample.Models.AuthorNamespace;
+using MoviesApiSample.Models.DirectorNamespace;
 using MoviesApiSample.Models.MovieNamespace;
 
 namespace MoviesApiSample.DAL.Framework
@@ -10,7 +10,9 @@ namespace MoviesApiSample.DAL.Framework
     {
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Actor> Actors{ get; set; }
-        public DbSet<Author> Authors { get; set; }
+        public DbSet<Director> Directors { get; set; }
+        public DbSet<DirectorMovie> DirectorMovies { get; set; }
+        public DbSet<ActorMovie> ActorMovies { get; set; }
 
         public MoviesApiSampleDbContex(DbContextOptions<MoviesApiSampleDbContex> dbContextOptions) : base(dbContextOptions)
         {

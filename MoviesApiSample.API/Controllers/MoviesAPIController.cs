@@ -11,18 +11,73 @@ namespace MoviesApiSample.API.Controllers
     public class MoviesAPIController : ControllerBase
     {
         private readonly ILogger<MoviesAPIController> _logger;
-        private readonly MoviesApiSampleDbContex _moviesApiSampleDbContex;
+        private readonly MoviesApiSampleRepository _moviesApiSampleRepository;
 
-        public MoviesAPIController(ILogger<MoviesAPIController> logger, MoviesApiSampleDbContex moviesApiSampleDbContex)
+        public MoviesAPIController(ILogger<MoviesAPIController> logger, MoviesApiSampleRepository moviesApiSampleRepository)
         {
             _logger = logger;
-            _moviesApiSampleDbContex = moviesApiSampleDbContex;
+            _moviesApiSampleRepository = moviesApiSampleRepository;
         }
 
         [HttpGet(Name = "GetMovies")]
-        public IEnumerable<Movie> Get()
+        public async Task<IActionResult> GetMovies()
         {
-            return _moviesApiSampleDbContex.Movies.Include(c => c.Actors).ToList();
+            var movies = await _moviesApiSampleRepository.GetAllMoviesAsync();
+            return Ok(movies);
+        }
+
+        [HttpGet("{id}", Name = "GetMovieById")]
+        public async Task<IActionResult> GetMovieById(int id)
+        {
+            var movie = await _moviesApiSampleRepository.GetMovieByIdAsync(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            return Ok(movie);
+        }
+
+        [HttpPost(Name = "CreateMovie")]
+        public async Task<IActionResult> CreateMovie([FromBody] Movie movie)
+        {
+            if (movie == null)
+            {
+                return BadRequest();
+            }
+
+            await _moviesApiSampleRepository.InsertMovieAsync(movie);
+            return CreatedAtRoute("GetMovieById", new { id = movie.Id }, movie);
+        }
+
+        [HttpPut("{id}", Name = "UpdateMovie")]
+        public async Task<IActionResult> UpdateMovie(int id, [FromBody] Movie movie)
+        {
+            if (movie == null || movie.Id != id)
+            {
+                return BadRequest();
+            }
+
+            var existingMovie = await _moviesApiSampleRepository.GetMovieByIdAsync(id);
+            if (existingMovie == null)
+            {
+                return NotFound();
+            }
+
+            await _moviesApiSampleRepository.EditMovieAsync(movie);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}", Name = "DeleteMovie")]
+        public async Task<IActionResult> DeleteMovie(int id)
+        {
+            var movie = await _moviesApiSampleRepository.GetMovieByIdAsync(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            await _moviesApiSampleRepository.DeleteMovieAsync(movie);
+            return NoContent();
         }
     }
 }

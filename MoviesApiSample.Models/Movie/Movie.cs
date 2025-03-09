@@ -1,5 +1,5 @@
 ﻿using MoviesApiSample.Models.ActorNamespace;
-using MoviesApiSample.Models.AuthorNamespace;
+using MoviesApiSample.Models.DirectorNamespace;
 
 namespace MoviesApiSample.Models.MovieNamespace
 {
@@ -8,7 +8,9 @@ namespace MoviesApiSample.Models.MovieNamespace
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public Author Author { get; set; }
-        public ICollection<Actor> Actors{ get; set; }
+        public int DirectorMovieId { get; set; }
+        public DirectorMovie DirectorMovie { get; set; }
+        public int ActorMovieId { get; set; }
+        public ActorMovie ActorMovie { get; set; }
     }
 }
