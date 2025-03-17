@@ -11,7 +11,10 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<MoviesApiSampleDbContex>();
+builder.Services.AddDbContext<MoviesApiSampleDbContex>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<MoviesApiSampleRepository>();
+
 
 var app = builder.Build();
 
