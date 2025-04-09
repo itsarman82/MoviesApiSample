@@ -11,7 +11,7 @@ using MoviesApiSample.DAL.Framework;
 namespace MoviesApiSample.DAL.Migrations
 {
     [DbContext(typeof(MoviesApiSampleDbContex))]
-    [Migration("20250317201652_init")]
+    [Migration("20250407064551_init")]
     partial class init
     {
         /// <inheritdoc />

@@ -20,7 +20,7 @@ namespace MoviesApiSample.DAL.Framework
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=.; Initial Catalog=MoviesAPI; User Id=sa; Password=armanz582; TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=localhost,1433;Database=MoviesDb;User Id=sa;Password=Armanz582;TrustServerCertificate=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
