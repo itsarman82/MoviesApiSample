@@ -11,12 +11,20 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<MoviesApiSampleDbContex>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 builder.Services.AddScoped<MoviesApiSampleRepository>();
 builder.Services.AddScoped<ActorApiSampleRepository>();
 builder.Services.AddScoped<DirectorApiSampleRepository>();
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<MoviesApiSampleDbContex>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
+else
+{
+    builder.Services.AddDbContext<MoviesApiSampleDbContex>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionConnection")));
+}
 
 var app = builder.Build();
 
