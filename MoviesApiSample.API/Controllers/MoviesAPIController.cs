@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 namespace MoviesApiSample.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("Movie/[controller]")]
     public class MoviesAPIController : ControllerBase
     {
         private readonly ILogger<MoviesAPIController> _logger;

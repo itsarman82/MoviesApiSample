@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MoviesApiSampleDbContex>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<MoviesApiSampleRepository>();
+builder.Services.AddScoped<IMoviesApiSampleRepository, MoviesApiSampleRepository>();
 builder.Services.AddScoped<ActorApiSampleRepository>();
 builder.Services.AddScoped<DirectorApiSampleRepository>();
 
