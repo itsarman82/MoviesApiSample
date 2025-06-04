@@ -8,7 +8,15 @@ using MoviesApiSample.Models.DirectorNamespace;
 
 namespace MoviesApiSample.DAL.Framework
 {
-    public class DirectorApiSampleRepository
+    public interface IDirectorApiSampleRepository
+    {
+        Task AddDirectorAsync(Director director);
+        Task DeleteDirectorAsync(int id);
+        Task<Director> GetDirectorByIdAsync(int id);
+        Task<IEnumerable<Director>> GetAllDirectorsAsync();
+        Task UpdateDirectorAsync(Director director);
+    }
+    public class DirectorApiSampleRepository : IDirectorApiSampleRepository
     {
         private readonly MoviesApiSampleDbContex _context;
 
@@ -51,8 +59,6 @@ namespace MoviesApiSample.DAL.Framework
                 existingDirector.LastName = director.LastName;
                 existingDirector.Gender = director.Gender;
                 existingDirector.Age = director.Age;
-                existingDirector.DirectorMovieId = director.DirectorMovieId;
-                existingDirector.DirectorMovie = director.DirectorMovie;
 
                 _context.Update(existingDirector);
                 await _context.SaveChangesAsync();

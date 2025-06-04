@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesApiSample.DAL.Framework;
 
@@ -10,9 +11,11 @@ using MoviesApiSample.DAL.Framework;
 namespace MoviesApiSample.DAL.Migrations
 {
     [DbContext(typeof(MoviesApiSampleDbContex))]
-    partial class MoviesApiSampleDbContexModelSnapshot : ModelSnapshot
+    [Migration("20250601204217_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

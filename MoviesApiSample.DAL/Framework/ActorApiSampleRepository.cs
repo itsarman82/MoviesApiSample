@@ -7,7 +7,16 @@ using MoviesApiSample.Models.ActorNamespace;
 
 namespace MoviesApiSample.DAL.Framework
 {
-    public class ActorApiSampleRepository
+
+    public interface IActorApiSampleRepository
+    {
+        Task<IEnumerable<Actor>> GetAllActorAsync();
+        Task<Actor> GetActorByIdAsync(int id);
+        Task AddActorAsync(Actor actor);
+        Task DeleteActorAsync(int id);
+        Task UpdateActorAsync(Actor actor);
+    }
+    public class ActorApiSampleRepository : IActorApiSampleRepository
     {
         private readonly MoviesApiSampleDbContex _context;
 
@@ -16,17 +25,17 @@ namespace MoviesApiSample.DAL.Framework
             _context = context;
         }
 
-        public async Task<IEnumerable<Actor>> GetAllAsync()
+        public async Task<IEnumerable<Actor>> GetAllActorAsync()
         {
             return await _context.Actors.ToListAsync();
         }
 
-        public async Task<Actor> GetByIdAsync(int id)
+        public async Task<Actor> GetActorByIdAsync(int id)
         {
             return await _context.Actors.FindAsync(id);
         }
 
-        public async Task AddAsync(Actor actor)
+        public async Task AddActorAsync(Actor actor)
         {
             if (actor == null) throw new ArgumentNullException(nameof(actor));
 
@@ -34,7 +43,7 @@ namespace MoviesApiSample.DAL.Framework
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Actor actor)
+        public async Task UpdateActorAsync(Actor actor)
         {
             if (actor == null) throw new ArgumentNullException(nameof(actor));
 
@@ -45,15 +54,13 @@ namespace MoviesApiSample.DAL.Framework
                 existingActor.LastName = actor.LastName;
                 existingActor.Gender = actor.Gender;
                 existingActor.Age = actor.Age;
-                existingActor.ActorMovieId = actor.ActorMovieId;
-                existingActor.ActorMovie = actor.ActorMovie;
 
                 _context.Actors.Update(existingActor);
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteActorAsync(int id)
         {
             var actor = await _context.Actors.FindAsync(id);
             if (actor != null)

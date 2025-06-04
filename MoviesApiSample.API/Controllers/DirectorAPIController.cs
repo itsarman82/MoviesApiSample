@@ -11,9 +11,9 @@ namespace MoviesApiSample.API.Controllers
     public class DirectorAPIController : ControllerBase
     {
         private readonly ILogger<DirectorAPIController> _logger;
-        private readonly DirectorApiSampleRepository _directorApiSampleRepository;
+        private readonly IDirectorApiSampleRepository _directorApiSampleRepository;
 
-        public DirectorAPIController(ILogger<DirectorAPIController> logger, DirectorApiSampleRepository directorApiSampleRepository, MoviesApiSampleDbContex context)
+        public DirectorAPIController(ILogger<DirectorAPIController> logger, IDirectorApiSampleRepository directorApiSampleRepository)
         {
             _logger = logger;
             _directorApiSampleRepository = directorApiSampleRepository;

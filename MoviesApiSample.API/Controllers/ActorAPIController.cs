@@ -11,9 +11,9 @@ namespace MoviesApiSample.API.Controllers
     public class ActorAPIController : ControllerBase
     {
         private readonly ILogger<ActorAPIController> _logger;
-        private readonly ActorApiSampleRepository _actorApiSampleRepository;
+        private readonly IActorApiSampleRepository _actorApiSampleRepository;
 
-        public ActorAPIController(ILogger<ActorAPIController> logger, IMoviesApiSampleRepository moviesApiSampleRepository, ActorApiSampleRepository actorApiSampleRepository)
+        public ActorAPIController(ILogger<ActorAPIController> logger, IActorApiSampleRepository actorApiSampleRepository)
         {
             _logger = logger;
             _actorApiSampleRepository = actorApiSampleRepository;
@@ -24,7 +24,7 @@ namespace MoviesApiSample.API.Controllers
         {
             try
             {
-                var actors = await _actorApiSampleRepository.GetAllAsync();
+                var actors = await _actorApiSampleRepository.GetAllActorAsync();
                 var actorDtos = actors.Select(actor => new ActorDto
                 {
                     Id = actor.Id,
@@ -47,7 +47,7 @@ namespace MoviesApiSample.API.Controllers
         {
             try
             {
-                var actor = await _actorApiSampleRepository.GetByIdAsync(id);
+                var actor = await _actorApiSampleRepository.GetActorByIdAsync(id);
                 if (actor == null)
                 {
                     return NotFound();
@@ -94,7 +94,7 @@ namespace MoviesApiSample.API.Controllers
                     Age = createActorDto.Age
                 };
 
-                await _actorApiSampleRepository.AddAsync(actor);
+                await _actorApiSampleRepository.AddActorAsync(actor);
                 return CreatedAtRoute("GetActorById", new { id = actor.Id }, actor);
             }
             catch (Exception ex)
@@ -119,7 +119,7 @@ namespace MoviesApiSample.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var existingActor = await _actorApiSampleRepository.GetByIdAsync(id);
+                var existingActor = await _actorApiSampleRepository.GetActorByIdAsync(id);
                 if (existingActor == null)
                 {
                     return NotFound();
@@ -130,7 +130,7 @@ namespace MoviesApiSample.API.Controllers
                 existingActor.Gender = updateActorDto.Gender;
                 existingActor.Age = updateActorDto.Age;
 
-                await _actorApiSampleRepository.UpdateAsync(existingActor);
+                await _actorApiSampleRepository.UpdateActorAsync(existingActor);
                 return NoContent();
             }
             catch (Exception ex)
@@ -145,13 +145,13 @@ namespace MoviesApiSample.API.Controllers
         {
             try
             {
-                var actor = await _actorApiSampleRepository.GetByIdAsync(id);
+                var actor = await _actorApiSampleRepository.GetActorByIdAsync(id);
                 if (actor == null)
                 {
                     return NotFound();
                 }
 
-                await _actorApiSampleRepository.DeleteAsync(id);
+                await _actorApiSampleRepository.DeleteActorAsync(id);
                 return NoContent();
             }
             catch (Exception ex)

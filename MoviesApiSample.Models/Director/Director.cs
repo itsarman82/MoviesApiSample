@@ -1,4 +1,6 @@
-﻿namespace MoviesApiSample.Models.DirectorNamespace
+﻿using MoviesApiSample.Models.MovieNamespace;
+
+namespace MoviesApiSample.Models.DirectorNamespace
 {
     public class Director
     {
@@ -7,7 +9,6 @@
         public string LastName { get; set; }
         public string Gender { get; set; }
         public int Age { get; set; }
-        public int DirectorMovieId { get; set; }
-        public DirectorMovie DirectorMovie { get; set; }
+        public ICollection<Movie> Movies{ get; set; }
     }
 }

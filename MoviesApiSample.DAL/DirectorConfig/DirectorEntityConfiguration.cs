@@ -38,14 +38,6 @@ namespace MoviesApiSample.DAL.DirectorConfig
             // Add indexes
             builder.HasIndex(d => d.Name);
             builder.HasIndex(d => d.LastName);
-
-            // Configure relationships
-            builder.HasOne(d => d.DirectorMovie)
-                .WithOne(dm => dm.Director)
-                .HasForeignKey<Director>(d => d.DirectorMovieId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            // Add any additional configurations if needed
         }
     }
 }

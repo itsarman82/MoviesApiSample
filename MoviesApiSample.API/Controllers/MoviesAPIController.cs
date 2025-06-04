@@ -16,7 +16,7 @@ namespace MoviesApiSample.API.Controllers
         private readonly ILogger<MoviesAPIController> _logger;
         private readonly IMoviesApiSampleRepository _moviesApiSampleRepository;
 
-        public MoviesAPIController(ILogger<MoviesAPIController> logger, IMoviesApiSampleRepository moviesApiSampleRepository, MoviesApiSampleDbContex context)
+        public MoviesAPIController(ILogger<MoviesAPIController> logger, IMoviesApiSampleRepository moviesApiSampleRepository)
         {
             _logger = logger;
             _moviesApiSampleRepository = moviesApiSampleRepository;
@@ -70,17 +70,7 @@ namespace MoviesApiSample.API.Controllers
                 {
                     Title = dto.Title,
                     Description = dto.Description,
-                    DirectorMovie = new DirectorMovie
-                    {
-                        DirectorId = dto.DirectorId
-                    },
-                    ActorMovie = new ActorMovie
-                    {
-                        Actors = dto.ActorIds.Select(id => new Actor
-                        {
-                            Id = id
-                        }).ToList()
-                    }
+                    
                 };
 
                 await _moviesApiSampleRepository.InsertMovieAsync(movie);
@@ -116,8 +106,6 @@ namespace MoviesApiSample.API.Controllers
 
                 existingMovie.Title = dto.Title;
                 existingMovie.Description = dto.Description;
-                existingMovie.DirectorMovie.DirectorId = dto.DirectorId;
-                existingMovie.ActorMovie.Actors = dto.ActorIds.Select(id => new Actor { Id = id }).ToList();
 
                 await _moviesApiSampleRepository.EditMovieAsync(existingMovie);
                 return NoContent();

@@ -15,8 +15,8 @@ builder.Services.AddDbContext<MoviesApiSampleDbContex>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IMoviesApiSampleRepository, MoviesApiSampleRepository>();
-builder.Services.AddScoped<ActorApiSampleRepository>();
-builder.Services.AddScoped<DirectorApiSampleRepository>();
+builder.Services.AddScoped<IActorApiSampleRepository, ActorApiSampleRepository>();
+builder.Services.AddScoped<IDirectorApiSampleRepository, DirectorApiSampleRepository>();
 
 var app = builder.Build();
 

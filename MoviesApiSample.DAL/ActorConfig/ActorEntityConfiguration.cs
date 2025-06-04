@@ -32,12 +32,6 @@ namespace MoviesApiSample.DAL.ActorConfig
 
             builder.Property(a => a.Age)
                 .IsRequired();
-
-            // Relationships
-            builder.HasOne(a => a.ActorMovie)
-                .WithMany(am => am.Actors)
-                .HasForeignKey(a => a.ActorMovieId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
